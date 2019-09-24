@@ -1,0 +1,19 @@
+{
+  "name": "micro-upload",
+  "version": "1.0.0",
+  "description": "upload file in a server",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "upload"
+  ],
+  "author": "Lorenzo Micci",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mocha": "^6.2.0",
+    "multer": "^1.4.2"
+  }
+}
