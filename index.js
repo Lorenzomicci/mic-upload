@@ -1,9 +1,11 @@
 //Require Moduli
 const express = require("express");
 var app = express();
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
+const uploader = require("./lib/uploader");
+const mongoose = require("mongoose");
+const upload = require("./lib/uploader").upload;
 Observer = require("./lib/Observer").Observer;
+
 //State = require("./lib/State").State;
 //List = require("./lib/List").List;
 
@@ -12,31 +14,46 @@ Observer = require("./lib/Observer").Observer;
 //const namesList = new List();
 //Observer.update();
 
-app.get('/', function (req, res) {
 
+uploader.setstorage();
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/profile', upload.single('avatar'), function (req, res, next) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
+
+app.post('/uploadfile', upload.single('myFile'), (req, res, next) => {
+  const file = req.file
+  if (!file) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+    res.send(file)
+    console.log('file uploaded');
+
 })
 
-app.post('/photos/upload', upload.array('photos', 12), function (req, res, next) {
-  // req.files is array of `photos` files
-  // req.body will contain the text fields, if there were any
+
+//Uploading multiple files
+app.post('/uploadmultiple', upload.array('myFiles', 12), (req, res, next) => {
+  const files = req.files
+  if (!files) {
+    const error = new Error('Please choose files')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+
+    res.send(files)
+
 })
 
-var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
+app.post('/upload', multipart(), async function(req, res, next) {
+  req.findOne({}, {}, { sort: { 'created_at' : 1 } }, function(err, post) {
+     console.log( post );
+  });
+}
 
-app.post('/cool-profile', cpUpload, function (req, res, next) {
-  // req.files(String -> Array);  /*is an object*/ //where fieldname is the key, and the value is array of files
-  //
-  // e.g.
-//    req.files['avatar'][0] -> File
-//    req.files['gallery'] -> Array
-  //
-  // req.body will contain the text fields, if there were any
-})
 
 app.listen(3000, function () {
   console.log('listening on port 3000!');

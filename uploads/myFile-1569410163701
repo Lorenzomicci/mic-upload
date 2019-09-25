@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+
+void function(int a,int b){
+//  char v='0';
+  {
+  //  int val = 0;
+  }//fine scope val
+
+}// fine scope a,b
+
+int increment(void){
+  static int local_static=0;
+  return local_static++;
+}
+
+int main(int argc, char const *argv[]) {
+   printf("Hello World!!! \n");
+  return 0;
+}
