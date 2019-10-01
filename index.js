@@ -2,19 +2,27 @@
 const express = require("express");
 var app = express();
 const uploader = require("./lib/uploader");
+const func = require("./lib/update");
 const mongoose = require("mongoose");
+const settings = require('./config/app-settings.js');
 const upload = require("./lib/uploader").upload;
-Observer = require("./lib/Observer").Observer;
+Observer = require("./lib/Observer").Observer; // Require dell oggetto observer
+Subject  = require("./lib/Subject").Subject; // Require dell oggetto Subject
 
-//State = require("./lib/State").State;
-//List = require("./lib/List").List;
+//Object.create(Observer);
+//Object.create(Subject);
+
+State = require("./lib/State").State;
+List = require("./lib/List").List;
 
 // Instanzio le classi
-//const appState = new State();
-//const namesList = new List();
-//Observer.update();
+//lista = Object.create(List);
+//stato = Object.create(State);
+
+//List.update();
 
 
+mongoose.connect(settings.mongoConnString, {useNewUrlParser: true});
 uploader.setstorage();
 
 app.get('/', function (req, res) {
@@ -48,11 +56,6 @@ app.post('/uploadmultiple', upload.array('myFiles', 12), (req, res, next) => {
 
 })
 
-app.post('/upload', multipart(), async function(req, res, next) {
-  req.findOne({}, {}, { sort: { 'created_at' : 1 } }, function(err, post) {
-     console.log( post );
-  });
-}
 
 
 app.listen(3000, function () {

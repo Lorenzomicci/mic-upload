@@ -1,0 +1,49 @@
+Subject
+
+
+Lo scopo della classe Subject è di mantenere un elenco di osservatori che deve comunicare quando viene aggiornato.
+Sarà inoltre necessario aggiungere o rimuovere osservatori.
+
+Ecco una breve spiegazione delle proprietà e dei metodi richiesti nella classe Subject:
+
++ addObserver () - push di un osservatore sull'array dell'osservatore
++ removeObserver (): rimuoverà un osservatore dall'array
++ notify (): avviserà tutti gli osservatori che è avvenuta una modifica
+
+
+observer
+
+
+Lo scopo della classe observer è quello di implementare un metodo update() che verrà chiamato dal metodo notify().
+
+
+
+----
+La classe Subject fa parte del modello obsevable.
+È l'oggetto che notificherà a tutti gli osservatori che è cambiato in qualche modo.
+
+
+
+----
+La classe observer è la seconda parte del modello observable.
+È quell'oggetto che viene avvisato quando qualcosa nella classe soggetto è stato aggiornato.
+
+L'implementazione per la funzione di update() è vuota in questa classe,
+devo ancora pensarla bene.
+
+----
+La classe di stato sarà lo stato dell'applicazione per la nostra app.
+Estende la classe soggetto, quindi a sua volta eredita tutte le funzioni sulla classe soggetto.
+
+All'istanza, il costruttore imposta lo stato su un oggetto vuoto.
+Il metodo get () restituisce solo lo stato. Il metodo update () è un po' più funzionale,
+Aggiornerà lo stato e quindi eseguirà il metodo notify () passando lungo lo stato aggiornato.
+Ciò consente a tutti gli osservatori di avere accesso allo stato aggiornato.
+
+----
+
+In totale, abbiamo tre componenti nell'app.
+
+Il componente List estende la classe Observer. 
+Ciò significa che vuole sapere quando lo stato dell'applicazione (soggetto) è cambiato.
+Si noti come sovrascriviamo il metodo di aggiornamento con un'implementazione effettiva che esegue nuovamente il rendering del componente.
